@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammed Ibrahim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-light: rgba(99, 102, 241, 0.1);
+            --border: #e2e8f0;
+            --shadow: rgba(15, 23, 42, 0.08);
+            --shadow-lg: rgba(15, 23, 42, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --accent-light: rgba(129, 140, 248, 0.15);
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-lg: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px var(--shadow-lg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            background: var(--accent-light);
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toggle-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(80px);
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .image-wrapper {
+            position: relative;
+        }
+
+        .profile-img {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--accent);
+            box-shadow: 0 30px 80px var(--shadow-lg);
+            animation: floatImage 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+        }
+
+        .image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 50%;
+            opacity: 0.2;
+            filter: blur(40px);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            padding: 1.1rem 2.5rem;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .social-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-8px) scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 3rem 3.5rem;
+            border-radius: 24px;
+            text-align: center;
+            position: relative;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 30px 80px var(--shadow-lg);
+            border: 1px solid var(--border);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--accent-light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 3rem;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        #projects {
+            background: var(--bg-secondary);
+            padding: 6rem 3rem;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 70px var(--shadow-lg);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:nth-child(2) .project-img {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .project-card:nth-child(3) .project-img {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .project-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover .project-img::after {
+            opacity: 1;
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .project-info p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-text p {
+                margin: 0 auto 2rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .profile-img {
+                width: 280px;
+                height: 280px;
+            }
+
+            .image-wrapper::before {
+                width: 320px;
+                height: 320px;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .services-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+
+            .modal-buttons .btn {
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo..jpg" alt="Profile" class="logo-img">
+                <span data-en="Mohammed Ibrahim AbuDaqqa" data-ar="محمد ابراهيم ابودقه">Mohammed Ibrahim AbuDaqqa</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" data-en="Home" data-ar="الرئيسية">Home</a>
+                <a href="#services" data-en="Services" data-ar="الخدمات">Services</a>
+                <a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a>
+                <a href="#contact" data-en="Contact" data-ar="التواصل">Contact</a>
+            </div>
+            <div class="controls">
+                <button class="toggle-btn" id="theme-toggle">🌙</button>
+                <button class="toggle-btn" id="lang-toggle">العربية</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-label" data-en="👋 Welcome to my personal Website" data-ar="👋 مرحباً بك في موقعي الشخصي">👋 Welcome to my personal Website</span>
+                <h1 data-en="Hello, I'm Mohammed Ibrahim" data-ar="مرحباً، أنا محمد ابراهيم">Hello, I'm Mohammed Ibrahim</h1>
+                <p data-en="A passionate developer and designer creating amazing digital experiences. I specialize in building modern, responsive websites and applications that make a difference." data-ar="مطور ومصمم شغوف بإنشاء تجارب رقمية مذهلة. أتخصص في بناء مواقع وتطبيقات حديثة ومتجاوبة تُحدث فرقاً.">A passionate developer and designer creating amazing digital experiences. I specialize in building modern, responsive websites and applications that make a difference.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" id="cv-btn">
+                        <span data-en="📥 Download CV" data-ar="📥 تحميل السيرة الذاتية">📥 Download CV</span>
+                    </button>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span data-en="💬 Get in Touch" data-ar="💬 تواصل معي">💬 Get in Touch</span>
+                    </a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-btn" title="LinkedIn">💼</a>
+                    <a href="#" class="social-btn" title="GitHub">💻</a>
+                    <a href="#" class="social-btn" title="Twitter">🐦</a>
+                    <a href="#" class="social-btn" title="Instagram">📷</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-wrapper">
+                    <img src="logo..jpg" alt="Profile Picture" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="cv-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title" data-en="Choose Language" data-ar="اختر اللغة">Choose Language</h3>
+            <div class="modal-buttons">
+                <a href="your-cv-arabic.pdf" class="btn btn-primary" download>
+                    <span>📄 العربية</span>
+                </a>
+                <a href="your-cv-english.pdf" class="btn btn-secondary" download>
+                    <span>📄 English</span>
+                </a>
+            </div>
+            <button class="modal-close" id="close-modal">✕</button>
+        </div>
+    </div>
+
+    <section id="services">
+        <div class="section-header">
+            <span class="section-label" data-en="What I Do" data-ar="ماذا أقدم">What I Do</span>
+            <h2 data-en="Services" data-ar="الخدمات">Services</h2>
+            <p class="section-desc" data-en="I provide high-quality services to help bring your ideas to life" data-ar="أقدم خدمات عالية الجودة لمساعدتك في تحقيق أفكارك">I provide high-quality services to help bring your ideas to life</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3 data-en="Web Development" data-ar="تطوير المواقع">Web Development</h3>
+                <p data-en="Building responsive and modern websites using latest technologies like React, Vue, and Node.js" data-ar="بناء مواقع متجاوبة وحديثة باستخدام أحدث التقنيات مثل React و Vue و Node.js">Building responsive and modern websites using latest technologies like React, Vue, and Node.js</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3 data-en="UI/UX Design" data-ar="تصميم واجهات المستخدم">UI/UX Design</h3>
+                <p data-en="Creating beautiful and intuitive user interfaces that provide amazing user experiences" data-ar="تصميم واجهات مستخدم جميلة وبديهية توفر تجارب مستخدم رائعة">Creating beautiful and intuitive user interfaces that provide amazing user experiences</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3 data-en="Mobile Apps" data-ar="تطبيقات الجوال">Mobile Apps</h3>
+                <p data-en="Developing cross-platform mobile applications that work seamlessly on iOS and Android" data-ar="تطوير تطبيقات الجوال متعددة المنصات التي تعمل بسلاسة على iOS و Android">Developing cross-platform mobile applications that work seamlessly on iOS and Android</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">
+            <span class="section-label" data-en="My Work" data-ar="أعمالي">My Work</span>
+            <h2 data-en="Projects" data-ar="المشاريع">Projects</h2>
+            <p class="section-desc" data-en="A collection of my recent projects and achievements" data-ar="مجموعة من مشاريعي وإنجازاتي الأخيرة">A collection of my recent projects and achievements</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img">🚀</div>
+                <div class="project-info">
+                    <h3 data-en="E-Commerce Platform" data-ar="منصة تجارة إلكترونية">E-Commerce Platform</h3>
+                    <p data-en="A modern e-commerce platform with advanced features including real-time inventory management and secure payment processing" data-ar="منصة تجارة إلكترونية حديثة مع ميزات متقدمة تشمل إدارة المخزون في الوقت الفعلي ومعالجة دفع آمنة">A modern e-commerce platform with advanced features including real-time inventory management and secure payment processing</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img">💡</div>
+                <div class="project-info">
+                    <h3 data-en="Creative Agency Website" data-ar="موقع وكالة إبداعية">Creative Agency Website</h3>
+                    <p data-en="A stunning portfolio website for a design agency with interactive animations and smooth transitions" data-ar="موقع معرض أعمال مذهل لوكالة تصميم مع رسوم متحركة تفاعلية وانتقالات سلسة">A stunning portfolio website for a design agency with interactive animations and smooth transitions</p>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">GSAP</span>
+                        <span class="tag">Tailwind</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img">🎨</div>
+                <div class="project-info">
+                    <h3 data-en="Fitness Tracking App" data-ar="تطبيق تتبع اللياقة">Fitness Tracking App</h3>
+                    <p data-en="A mobile application for fitness tracking with personalized workout plans and progress monitoring" data-ar="تطبيق جوال لتتبع اللياقة البدنية مع خطط تمرين مخصصة ومراقبة التقدم">A mobile application for fitness tracking with personalized workout plans and progress monitoring</p>
+                    <div class="project-tags">
+                        <span class="tag">React Native</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Redux</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-label" data-en="Get In Touch" data-ar="تواصل معي">Get In Touch</span>
+            <h2 data-en="Contact Me" data-ar="اتصل بي">Contact Me</h2>
+            <p class="section-desc" data-en="Feel free to reach out for collaborations or just a friendly hello" data-ar="لا تتردد في التواصل للتعاون أو مجرد إلقاء التحية">Feel free to reach out for collaborations or just a friendly hello</p>
+        </div>
+        <div class="contact-info">
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3 data-en="Email" data-ar="البريد الإلكتروني">Email</h3>
+                <p>engmohammeddaqqa@gmail.com</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3 data-en="Phone" data-ar="الهاتف">Phone</h3>
+                <p>+970594618422</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3 data-en="Location" data-ar="فلسطين - غزة">Location</h3>
+                <p>Palestine - Gaza</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p data-en="© 2025 Mohammed Ibrahim. All rights reserved." data-ar="© 2025 محمد ابراهيم. جميع الحقوق محفوظة.">© 2025 Mohammed Ibrahim. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        });
+
+        const langToggle = document.getElementById('lang-toggle');
+
+        function updateLanguage() {
+            langToggle.textContent = currentLang === 'en' ? 'العربية' : 'English';
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', currentLang);
+            
+            const elements = document.querySelectorAll('[data-en][data-ar]');
+            elements.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+        }
+
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            updateLanguage();
+        });
+
+        const cvBtn = document.getElementById('cv-btn');
+        const cvModal = document.getElementById('cv-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        cvBtn.addEventListener('click', () => {
+            cvModal.classList.add('active');
+            const modalTitle = document.getElementById('modal-title');
+            modalTitle.textContent = modalTitle.getAttribute(`data-${currentLang}`);
+        });
+
+        closeModal.addEventListener('click', () => {
+            cvModal.classList.remove('active');
+        });
+
+        cvModal.addEventListener('click', (e) => {
+            if (e.target === cvModal) {
+                cvModal.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        // Make contact methods clickable and switch Phone -> WhatsApp
+        (function() {
+            function transformContacts() {
+                const contact = document.getElementById('contact');
+                if (!contact) return;
+
+                function setIcon(card, emoji) {
+                    const icon = card.querySelector('.contact-icon');
+                    if (icon) icon.textContent = emoji;
+                }
+
+                function ensureLink(card, href, text, newTab = false) {
+                    const p = card.querySelector('p');
+                    if (!p) return;
+                    const existingA = p.querySelector('a');
+                    if (existingA) {
+                        existingA.href = href;
+                        existingA.textContent = text;
+                        if (newTab) { existingA.target = '_blank'; existingA.rel = 'noopener noreferrer'; }
+                    } else {
+                        const a = document.createElement('a');
+                        a.href = href;
+                        a.textContent = text;
+                        if (newTab) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+                        p.textContent = '';
+                        p.appendChild(a);
+                    }
+                }
+
+                // Email card
+                const emailTitle = contact.querySelector("h3[data-en='Email']");
+                if (emailTitle) {
+                    const emailCard = emailTitle.closest('.contact-card');
+                    if (emailCard) {
+                        setIcon(emailCard, '📧');
+                        ensureLink(emailCard, 'mailto:engmohammeddaqqa@gmail.com', 'engmohammeddaqqa@gmail.com');
+                    }
+                }
+
+                // Phone -> WhatsApp card
+                let waTitle = contact.querySelector("h3[data-en='Phone']") || contact.querySelector("h3[data-en='WhatsApp']");
+                if (waTitle) {
+                    waTitle.setAttribute('data-en', 'WhatsApp');
+                    waTitle.setAttribute('data-ar', 'واتساب');
+                    try { waTitle.textContent = waTitle.getAttribute((window.currentLang || 'en') === 'ar' ? 'data-ar' : 'data-en'); } catch (e) {}
+                    const waCard = waTitle.closest('.contact-card');
+                    if (waCard) {
+                        setIcon(waCard, '💬');
+                        ensureLink(waCard, 'https://wa.me/+970594618422', '+970594618422', true);
+                    }
+                }
+
+                // Location card -> open maps
+                const locTitle = contact.querySelector("h3[data-en='Location']");
+                if (locTitle) {
+                    const locCard = locTitle.closest('.contact-card');
+                    if (locCard) {
+                        setIcon(locCard, '📍');
+                        ensureLink(locCard, 'https://www.google.com/maps/search/?api=1&query=Palestine%20Gaza', 'Palestine - Gaza', true);
+                    }
+                }
+            }
+
+            // Run now and on language toggle
+            transformContacts();
+            const langBtn2 = document.getElementById('lang-toggle');
+            if (langBtn2) {
+                langBtn2.addEventListener('click', () => setTimeout(transformContacts, 0));
+            }
+            try {
+                const originalUpdateLanguage = window.updateLanguage;
+                if (typeof originalUpdateLanguage === 'function') {
+                    window.updateLanguage = function() {
+                        originalUpdateLanguage.call(this);
+                        transformContacts();
+                    };
+                }
+            } catch (e) {}
+        })();
+
+    </script>
+</body>
+</html>
